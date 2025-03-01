@@ -23,15 +23,15 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className="w-full bg-white shadow-md">
+    <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50"> {/* Adicionado fixed, top-0 e z-50 */}
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo clicável que leva para a página principal */}
         <Link href="/" className="flex items-center cursor-pointer rounded-lg">
           <Image
             src="/logoc.png" // Certifique-se que a imagem está na pasta public/
             alt="Logo"
-            width={75} 
-            height={20} 
+            width={75}
+            height={20}
             className="h-auto"
           />
         </Link>
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
           {/* Dropdown de Serviços */}
           <div className="relative" ref={dropdownRef}>
             <button
-              className="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold"
+              className="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold shadow-md hover:bg-blue-700 transition"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               Serviços
@@ -51,31 +51,15 @@ const Header: React.FC = () => {
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-3 w-64 bg-white border rounded-lg shadow-lg">
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Abrir MEI
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Alterar MEI
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Cancelar MEI
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Declaração Anual
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Atraso das Guias
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Voltar a ser MEI
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Assessoria Mensal
-                </a>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Regularização / Reativar MEI
-                </a>
+              <div className="absolute right-0 mt-3 w-64 bg-white border rounded-lg shadow-lg z-50">
+                <a href="/abrirmei" className="block px-4 py-2 hover:bg-gray-100">Abrir MEI</a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100">Alterar MEI</a>
+                <a href="/cancelar-mei" className="block px-4 py-2 hover:bg-gray-100">Cancelar MEI</a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100">Declaração Anual</a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100">Atraso das Guias</a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100">Voltar a ser MEI</a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100">Assessoria Mensal</a>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100">Regularização / Reativar MEI</a>
               </div>
             )}
           </div>

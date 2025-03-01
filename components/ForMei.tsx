@@ -37,7 +37,7 @@ const FormMEI: React.FC = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-xl border border-gray-200 mt-10">
+    <div id="form-mei" className="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-xl border border-gray-200 mt-10">
       <h2 className="text-2xl font-semibold text-gray-800 text-center">
         🚀 Abra seu <span className="text-blue-600">CNPJ MEI</span> agora!
       </h2>

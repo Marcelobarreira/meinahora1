@@ -1,20 +1,16 @@
-import Logo from "@/components/logo";
-import Link from "next/link";
 import CheckoutReturnPage from "./payment-confirmation/page";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
-export default function Layout ({ children }: { children:
-  React.ReactNode}) {
-    return (
-      <section className="flex flex-col items-center justify-center py-40">
-        <Link href={'/'}>
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center py-40">
+        <CheckoutReturnPage />
 
-        <Logo />
-        </Link>
-        <CheckoutReturnPage/>
-
-
-      </section>
-    )
-
-
+      </main>
+      <Footer />
+    </div>
+  );
 }

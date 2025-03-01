@@ -1,7 +1,8 @@
+// PlanosLista.tsx
 "use client";
 
 import { useRouter } from "next/navigation";
-
+import PaymentButton from "./payment-button";
 
 interface Plano {
   id: string;
@@ -9,24 +10,41 @@ interface Plano {
   price: string;
   description: string;
   features: string[];
+  stripePriceId: string; // nova propriedade para identificar o produto
 }
 
 const planos: Plano[] = [
   {
     id: "plano-1",
-    name: "Serviço 1",
-    price: "R$ 0,01",
+    name: "Abertura + consultaria simples",
+    price: "R$ 130,00",
     description: "Plano básico para iniciar seu MEI.",
     features: ["Abertura do CNPJ", "Suporte via WhatsApp", "Consultoria gratuita"],
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRODUTO_1 ?? "",
   },
   {
     id: "plano-2",
-    name: "Serviço 2",
-    price: "R$ 0,02",
+    name: "Abertura + consultoria completa",
+    price: "R$ 200,00",
     description: "Plano completo para seu MEI com suporte premium.",
     features: ["Abertura do CNPJ", "Suporte VIP", "Assessoria contábil", "Consultoria detalhada"],
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRODUTO_2 ?? "",
+  },
+  {
+    id: "plano-3",
+    name: "Serviço de Regularização completa",
+    price: "R$ 200,00",
+    description: "Serviço completo para regularização do seu MEI com assessoria especializada.",
+    features: [
+      "Regularização fiscal",
+      "Assessoria jurídica",
+      "Consultoria especializada",
+      "Suporte contínuo"
+    ],
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRODUTO_3 ?? "",
   },
 ];
+
 
 export default function PlanosLista() {
   const router = useRouter();
@@ -65,12 +83,9 @@ export default function PlanosLista() {
               </ul>
             </div>
 
-            <button
-              onClick={() => selecionarPlano(plano)}
-              className="mt-6 w-full py-3 px-6 bg-indigo-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-indigo-500 transition"
-            >
-              Selecionar plano
-            </button>
+            <PaymentButton priceId={plano.stripePriceId}>
+              Selecionar Plano
+            </PaymentButton>
           </div>
         ))}
       </div>
