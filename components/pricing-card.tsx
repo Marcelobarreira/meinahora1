@@ -10,6 +10,11 @@ import {
 import { Button } from './ui/button';
 import PaymentButton from './payment-button';
 
+const plans = [
+  { id: "price_12345", name: "Plano Básico", price: "R$ 29,90/mês" },
+  { id: "price_67890", name: "Plano Premium", price: "R$ 49,90/mês" }
+];
+
 export default function PricingCard() {
   return (
     <Card className="w-[350px] text-left md:mt-20 mt-10">
@@ -46,7 +51,10 @@ export default function PricingCard() {
         </ul>
       </CardContent>
       <CardFooter>
-        <PaymentButton>Assinar</PaymentButton>
+      <CardFooter>
+  <PaymentButton priceId={plans[0].id}>Assinar</PaymentButton>
+</CardFooter>
+
       </CardFooter>
     </Card>
   );
