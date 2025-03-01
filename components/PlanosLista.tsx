@@ -1,8 +1,6 @@
-// PlanosLista.tsx
 "use client";
 
-import { useRouter } from "next/navigation";
-import PaymentButton from "./payment-button";
+import { useEffect, useState } from "react";
 
 interface Plano {
   id: string;
@@ -10,17 +8,15 @@ interface Plano {
   price: string;
   description: string;
   features: string[];
-  stripePriceId: string; // nova propriedade para identificar o produto
 }
 
 const planos: Plano[] = [
   {
     id: "plano-1",
-    name: "Abertura + consultaria simples",
+    name: "Abertura + consultoria simples",
     price: "R$ 130,00",
     description: "Plano básico para iniciar seu MEI.",
     features: ["Abertura do CNPJ", "Suporte via WhatsApp", "Consultoria gratuita"],
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRODUTO_1 ?? "",
   },
   {
     id: "plano-2",
@@ -28,7 +24,6 @@ const planos: Plano[] = [
     price: "R$ 200,00",
     description: "Plano completo para seu MEI com suporte premium.",
     features: ["Abertura do CNPJ", "Suporte VIP", "Assessoria contábil", "Consultoria detalhada"],
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRODUTO_2 ?? "",
   },
   {
     id: "plano-3",
@@ -39,19 +34,81 @@ const planos: Plano[] = [
       "Regularização fiscal",
       "Assessoria jurídica",
       "Consultoria especializada",
-      "Suporte contínuo"
+      "Suporte contínuo",
     ],
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRODUTO_3 ?? "",
+  },
+  {
+    id: "plano-4",
+    name: "Cancelamento de MEI",
+    price: "R$ 79,00",
+    description: "Encerramos seu CNPJ MEI de forma rápida e segura.",
+    features: [
+      "Processo 100% online",
+      "Encerramento do MEI com segurança",
+      "Certidão de baixa do CNPJ",
+      "Regularização e levantamento da situação",
+    ],
   },
 ];
 
-
 export default function PlanosLista() {
-  const router = useRouter();
+  const [formData, setFormData] = useState<any>(null);
 
-  const selecionarPlano = (plano: Plano) => {
-    sessionStorage.setItem("planoSelecionado", JSON.stringify(plano));
-    router.push("/checkout");
+  useEffect(() => {
+    // Recupera os dados do formulário do sessionStorage
+    const storedData = sessionStorage.getItem("formData");
+    if (storedData) {
+      setFormData(JSON.parse(storedData));
+    }
+  }, []);
+
+  // Função para formatar CPF como XXX.XXX.XXX-XX
+  const formatarCPF = (cpf: string) => {
+    return cpf
+      .replace(/\D/g, '') // Remove caracteres não numéricos
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  };
+
+  // Função para formatar data de nascimento como DD/MM/AAAA
+  const formatarDataNascimento = (data: string) => {
+    if (!data) return "Não informado";
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}/${mes}/${ano}`;
+  };
+
+  // Função para formatar telefone como (XX) XXXXX-XXXX
+  const formatarTelefone = (telefone: string) => {
+    return telefone
+      .replace(/\D/g, '') // Remove caracteres não numéricos
+      .replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formata para (XX) XXXXX-XXXX
+  };
+
+  const enviarParaWhatsApp = (plano: Plano) => {
+    if (!formData) {
+      alert("Erro ao recuperar os dados do formulário.");
+      return;
+    }
+
+    const mensagem = `
+      Olá, gostaria de contratar o serviço *${plano.name}*.
+      Aqui estão meus dados:
+
+      📌 Nome: ${formData.nomeCompleto}
+      📧 Email: ${formData.email}
+      📞 Telefone: ${formatarTelefone(formData.telefone)}
+      🆔 CPF: ${formatarCPF(formData.cpf)}
+      🎂 Nascimento: ${formatarDataNascimento(formData.dataNascimento)}
+      📢 Como conheceu: ${formData.comoConheceu ?? "Não informado"}
+
+      💰 Valor do serviço: *${plano.price}*
+    `;
+
+    const telefoneWhatsApp = "5585981720037"; // Número do WhatsApp para atendimento
+    const urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefoneWhatsApp}&text=${encodeURIComponent(mensagem)}`;
+
+    window.open(urlWhatsApp, "_blank");
   };
 
   return (
@@ -83,9 +140,13 @@ export default function PlanosLista() {
               </ul>
             </div>
 
-            <PaymentButton priceId={plano.stripePriceId}>
-              Selecionar Plano
-            </PaymentButton>
+            {/* Botão para redirecionar ao WhatsApp */}
+            <button
+              onClick={() => enviarParaWhatsApp(plano)}
+              className="mt-6 w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition duration-300"
+            >
+              Escolher este serviço
+            </button>
           </div>
         ))}
       </div>

@@ -29,7 +29,7 @@ export default function MeiSupportSection() {
         ].map((service, index) => (
           <div
             key={index}
-            className="p-6 bg-white shadow-lg rounded-lg text-center transition-transform transform hover:scale-105"
+            className="p-6 bg-white shadow-lg rounded-lg text-center"
           >
             <h3 className="text-xl font-semibold text-gray-900">{service.title}</h3>
             <p className="mt-2 text-gray-600">{service.description}</p>
