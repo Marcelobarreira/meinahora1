@@ -16,11 +16,33 @@ const FormMEI: React.FC = () => {
     aceitarTermos: false,
   });
 
+  // Função para formatar os inputs manualmente
+  const formatInput = (name: string, value: string) => {
+    if (name === "telefone") {
+      return value
+        .replace(/\D/g, "") // Remove tudo que não for número
+        .replace(/^(\d{2})(\d)/, "($1) $2") // Adiciona parênteses no DDD
+        .replace(/(\d{5})(\d)/, "$1-$2") // Adiciona o traço no número
+        .slice(0, 15); // Limita ao tamanho máximo esperado
+    }
+
+    if (name === "cpf") {
+      return value
+        .replace(/\D/g, "") // Remove tudo que não for número
+        .replace(/(\d{3})(\d)/, "$1.$2") // Primeiro ponto
+        .replace(/(\d{3})(\d)/, "$1.$2") // Segundo ponto
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Traço
+        .slice(0, 14); // Limita ao tamanho máximo esperado
+    }
+
+    return value; // Retorna o valor sem alterações caso não precise de máscara
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : formatInput(name, value),
     }));
   };
 
@@ -80,7 +102,7 @@ const FormMEI: React.FC = () => {
             <input
               type="tel"
               name="telefone"
-              placeholder="(99) 99999-9999"
+              placeholder="(85) 99999-9999"
               value={formData.telefone}
               onChange={handleChange}
               className="w-full p-3 border rounded-lg "
@@ -146,7 +168,7 @@ const FormMEI: React.FC = () => {
           />
           <label className="ml-3 text-gray-700">
             Li e aceito os{" "}
-            <span className="text-blue-600 font-semibold cursor-pointer">termos e condições</span>
+            <a href="/termos" target="_blank" className="text-blue-600 font-semibold cursor-pointer">termos e condições</a>
           </label>
         </div>
 
