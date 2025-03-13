@@ -105,7 +105,7 @@ export default function PlanosLista() {
       💰 Valor do serviço: *${plano.price}*
     `;
 
-    const telefoneWhatsApp = "5585981720037"; // Número do WhatsApp para atendimento
+    const telefoneWhatsApp = "5585991463668"; // Número do WhatsApp para atendimento
     const urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefoneWhatsApp}&text=${encodeURIComponent(mensagem)}`;
 
     window.open(urlWhatsApp, "_blank");

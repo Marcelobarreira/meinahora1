@@ -39,7 +39,7 @@ export default function Footer() {
             <FaInstagram className="text-lg" />
           </a>
           <a
-            href="https://wa.me/558581720037?text=Olá,%20quero%20saber%20mais%20sobre%20a%20MEI%20na%20Hora"
+            href="https://wa.me/5585991463668?text=Olá,%20quero%20saber%20mais%20sobre%20a%20MEI%20na%20Hora"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-400 transition"

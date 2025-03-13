@@ -72,7 +72,7 @@ const DuvidasMEI = () => {
         <p className="text-lg">
           Ainda tem dúvidas? Fale com um de nossos consultores no{" "}
           <span
-          onClick={() => window.open("https://api.whatsapp.com/send?phone=5585981720037&text=Ol%C3%A1%20gostaria%20de%20tirar%20d%C3%BAvidas%20sobre%20MEI!")}
+          onClick={() => window.open("https://api.whatsapp.com/send?phone=5585991463668&text=Ol%C3%A1%20gostaria%20de%20tirar%20d%C3%BAvidas%20sobre%20MEI!")}
           className="text-green-500 cursor-pointer hover:underline">
             WhatsApp
           </span>{" "}
